@@ -2,6 +2,7 @@ let servers = [];
 let currentPlayer = null;
 let currentServer = null;
 let playerIndex = null;
+let selectedCategory = null;
 
 function enterGame() {
   const name = document.getElementById("playerName").value;
@@ -21,11 +22,29 @@ function showJoin() {
   document.getElementById("joinSection").style.display = "block";
 }
 
+function selectCategory(category) {
+  selectedCategory = category;
+  document.querySelectorAll(".category").forEach(cat => cat.classList.remove("selected"));
+  const cats = document.querySelectorAll(".category");
+  cats.forEach(cat => {
+    if (cat.innerText.includes("مشاهير يوتيوب") && category === "youtubers") cat.classList.add("selected");
+  });
+}
+
 function createServer() {
   const name = document.getElementById("serverName").value;
   const pass = document.getElementById("serverPass").value;
   if (!name) return alert("اكتب اسم السيرفر");
-  servers.push({ name, pass, players: [currentPlayer], selectedImages: [null, null] });
+  if (!selectedCategory) return alert("يرجى اختيار نوع الصور");
+
+  servers.push({
+    name,
+    pass,
+    players: [currentPlayer],
+    selectedImages: [null, null],
+    category: selectedCategory
+  });
+
   currentServer = servers[servers.length - 1];
   playerIndex = 0;
   waitForPlayers();
@@ -69,7 +88,12 @@ function startGame() {
 function loadImages() {
   const container = document.getElementById("imageContainer");
   container.innerHTML = "";
-  let allImages = Array.from({ length: 25 }, (_, i) => `images/img${i + 1}.jpg`);
+
+  let basePath = "images/youtubers"; // الافتراضي حالياً
+
+  if (currentServer.category === "youtubers") basePath = "images/youtubers";
+
+  let allImages = Array.from({ length: 25 }, (_, i) => `${basePath}/img${i + 1}.jpg`);
   allImages = shuffle(allImages).slice(0, 25);
 
   allImages.forEach(src => {
@@ -96,7 +120,6 @@ function selectImage(src) {
   }
 }
 
-let isFirstTurn = true;
 let turn = 0;
 function updateTurn() {
   document.getElementById("controls").innerHTML = "";

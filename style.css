@@ -67,3 +67,35 @@ button {
   opacity: 0.3 !important;
   border: 2px dashed red;
 }
+
+#categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.category {
+  background: #444;
+  padding: 15px;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+  border: 2px solid transparent;
+  text-align: center;
+}
+
+.category:hover:not(.disabled) {
+  background: #00b894;
+}
+
+.category.selected {
+  border: 2px solid #00b894;
+}
+
+.category.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
