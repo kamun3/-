@@ -1,52 +1,85 @@
 body {
-  font-family: Tahoma, sans-serif;
+  font-family: 'Tahoma', sans-serif;
   background: linear-gradient(to bottom, #1c1c1c, #333);
   color: #fff;
   text-align: center;
-  padding: 50px;
+  padding: 30px 10px;
   direction: rtl;
+  margin: 0;
 }
 
 .container {
-  max-width: 700px;
+  max-width: 800px;
   margin: auto;
   background: #222;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 0 15px #000;
+  border-radius: 15px;
+  padding: 30px 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
 }
 
-input, button {
-  padding: 10px;
-  margin: 10px;
+h1 {
+  margin-bottom: 25px;
+  font-size: 28px;
+  color: #00cec9;
+}
+
+h2 {
+  margin-top: 30px;
+  font-size: 22px;
+  color: #81ecec;
+}
+
+input[type="text"],
+input[type="password"] {
+  padding: 12px;
+  margin: 10px auto;
   width: 80%;
-  border-radius: 5px;
+  max-width: 300px;
+  border-radius: 8px;
   border: none;
   font-size: 16px;
+  display: block;
+  box-sizing: border-box;
 }
 
 button {
+  padding: 10px 20px;
+  margin: 10px 5px;
   background: #00b894;
   color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
   cursor: pointer;
+  transition: background 0.2s ease;
 }
 
-button:disabled {
-  background: gray;
+button:hover {
+  background: #019875;
+}
+
+button[disabled] {
+  background: #555;
   cursor: not-allowed;
 }
 
-.modes {
+.game-modes {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
+  margin-bottom: 20px;
+}
+
+.actions {
+  margin-top: 20px;
 }
 
 #imageContainer {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
   gap: 10px;
+  justify-content: center;
   margin-top: 20px;
 }
 
@@ -55,26 +88,50 @@ button:disabled {
   max-width: 100px;
   height: auto;
   border-radius: 10px;
+  transition: transform 0.3s, opacity 0.3s;
   cursor: pointer;
-  transition: transform 0.3s;
 }
 
 #imageContainer img:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 #selectedImage img {
   margin-top: 20px;
   border: 2px solid #00b894;
   border-radius: 10px;
+  width: 120px;
 }
 
-.version {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
+.marked-for-deletion {
+  opacity: 0.3 !important;
+  border: 2px dashed red;
+}
+
+#serverList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.server-item {
+  background: #444;
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 80%;
+  max-width: 300px;
+}
+
+.server-item:hover {
+  background: #555;
+}
+
+footer {
+  margin-top: 40px;
+  font-size: 12px;
   color: #aaa;
-  font-size: 14px;
-  opacity: 0.8;
 }
-
