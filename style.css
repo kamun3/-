@@ -68,34 +68,21 @@ button {
   border: 2px dashed red;
 }
 
-#categoryGrid {
+.server-list {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 10px;
-  margin-bottom: 15px;
+  margin-top: 20px;
 }
 
-.category {
+.server-item {
   background: #444;
-  padding: 15px;
-  border-radius: 8px;
-  color: white;
-  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s;
-  border: 2px solid transparent;
-  text-align: center;
+  transition: background 0.2s;
 }
 
-.category:hover:not(.disabled) {
-  background: #00b894;
-}
-
-.category.selected {
-  border: 2px solid #00b894;
-}
-
-.category.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.server-item:hover {
+  background: #666;
 }

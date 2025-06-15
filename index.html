@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>لعب سيرفرات المشاهير</title>
+  <title>لعبة سيرفرات المشاهير</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -21,26 +21,28 @@
     </div>
 
     <div id="createSection" style="display:none;">
-      <h2>➕ إنشاء سيرفر</h2>
-
-      <div id="categoryGrid">
-        <div class="category" onclick="selectCategory('youtubers')">🎥 مشاهير يوتيوب</div>
-        <div class="category disabled">🎮 ألعاب (جاري الصيانة)</div>
-        <div class="category disabled">⚽ كرة قدم (جاري الصيانة)</div>
-        <div class="category disabled">🎬 أفلام (جاري الصيانة)</div>
-        <div class="category disabled">🧙‍♂️ أنمي (جاري الصيانة)</div>
-      </div>
-
+      <h2>إنشاء سيرفر</h2>
       <input type="text" id="serverName" placeholder="اسم السيرفر" />
       <input type="password" id="serverPass" placeholder="كلمة المرور (اختياري)" />
+      <div id="categorySelect">
+        <h3>اختر نوع الصور</h3>
+        <div class="category" onclick="selectCategory(0)">🎥 مشاهير اليوتيوب</div>
+        <div class="category">🔧 جاري الصيانة</div>
+        <div class="category">🔧 جاري الصيانة</div>
+        <div class="category">🔧 جاري الصيانة</div>
+        <div class="category">🔧 جاري الصيانة</div>
+      </div>
       <button onclick="createServer()">إنشاء</button>
     </div>
 
     <div id="joinSection" style="display:none;">
       <h2>دخول سيرفر</h2>
       <input type="text" id="searchName" placeholder="ابحث عن اسم السيرفر" />
-      <input type="password" id="joinPass" placeholder="كلمة المرور" />
-      <button onclick="joinServer()">دخول</button>
+      <div id="serverList"></div>
+      <div id="joinInputs" style="display:none;">
+        <input type="password" id="joinPass" placeholder="كلمة المرور" />
+        <button onclick="joinServer()">دخول</button>
+      </div>
     </div>
 
     <div id="waitingScreen" style="display:none;">
