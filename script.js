@@ -2,12 +2,11 @@ let servers = [];
 let currentPlayer = null;
 let currentServer = null;
 let playerIndex = null;
-let selectedMode = null;
+let selectedMode = 'مشاهير اليوتيوب'; // اختياره تلقائيًا
 
 function enterGame() {
   const name = document.getElementById("playerName").value;
-  if (!name) return alert("📝 الرجاء كتابة الاسم أولاً");
-
+  if (!name) return alert("اكتب اسمك أولاً");
   currentPlayer = name;
   document.getElementById("nameSection").style.display = "none";
   document.getElementById("mainMenu").style.display = "block";
@@ -16,6 +15,7 @@ function enterGame() {
 function showCreate() {
   document.getElementById("createSection").style.display = "block";
   document.getElementById("joinSection").style.display = "none";
+  document.getElementById("mode1").classList.add("selected");
 }
 
 function showJoin() {
@@ -26,54 +26,66 @@ function showJoin() {
 
 function selectMode(mode) {
   selectedMode = mode;
-  alert("✅ تم اختيار: مشاهير اليوتيوب");
-}
-
-function underMaintenance() {
-  alert("❌ هذا النوع تحت الصيانة حالياً");
+  document.querySelectorAll(".modes button").forEach(btn => btn.classList.remove("selected"));
+  event.target.classList.add("selected");
 }
 
 function createServer() {
   const name = document.getElementById("serverName").value;
   const pass = document.getElementById("serverPass").value;
-  if (!name) return alert("📝 الرجاء كتابة اسم السيرفر");
-  if (!selectedMode) return alert("❗ اختر نوع اللعبة أولاً");
+  if (!name) return alert("اكتب اسم السيرفر");
+  if (!selectedMode) return alert("اختر نوع اللعبة");
 
-  servers.push({ name, pass, mode: selectedMode, players: [currentPlayer], selectedImages: [null, null] });
+  servers.push({ name, pass, players: [currentPlayer], selectedImages: [null, null], mode: selectedMode });
   currentServer = servers[servers.length - 1];
   playerIndex = 0;
   waitForPlayers();
 }
 
 function updateServerList() {
-  const list = document.getElementById("serverList");
-  list.innerHTML = "";
+  const container = document.getElementById("serverList");
+  container.innerHTML = "";
+  const search = document.getElementById("searchName").value;
 
-  servers.forEach(server => {
-    const btn = document.createElement("button");
-    btn.textContent = server.name;
-    btn.onclick = () => {
-      if (server.pass) {
-        const enteredPass = prompt("🔐 هذا السيرفر محمي بكلمة مرور، الرجاء إدخالها:");
-        if (enteredPass !== server.pass) {
-          alert("❌ كلمة المرور غير صحيحة");
-          return;
-        }
-      }
-
-      if (server.players.length >= 2) return alert("🚫 السيرفر ممتلئ (الحد 2 لاعبين)");
-
-      server.players.push(currentPlayer);
-      currentServer = server;
-      playerIndex = 1;
-      waitForPlayers();
-    };
-    list.appendChild(btn);
-  });
-
-  if (servers.length === 0) {
-    list.innerHTML = "<p>لا توجد سيرفرات حالياً</p>";
+  const filtered = servers.filter(s => s.name.includes(search));
+  if (filtered.length === 0) {
+    container.innerHTML = "<p>لا توجد سيرفرات حالياً</p>";
+    return;
   }
+
+  filtered.forEach(server => {
+    const div = document.createElement("div");
+    div.innerHTML = `<button onclick="selectServer('${server.name}')">${server.name} - ${server.mode}</button>`;
+    container.appendChild(div);
+  });
+}
+
+let selectedJoinServer = null;
+function selectServer(name) {
+  const found = servers.find(s => s.name === name);
+  if (!found) return alert("السيرفر غير موجود");
+  if (found.players.length >= 2) return alert("السيرفر ممتلئ");
+  selectedJoinServer = found;
+
+  if (found.pass) {
+    document.getElementById("passwordPrompt").style.display = "block";
+  } else {
+    joinSelectedServer();
+  }
+}
+
+function confirmJoin() {
+  const inputPass = document.getElementById("joinPass").value;
+  if (selectedJoinServer.pass !== inputPass) return alert("كلمة المرور غير صحيحة");
+  joinSelectedServer();
+}
+
+function joinSelectedServer() {
+  selectedJoinServer.players.push(currentPlayer);
+  currentServer = selectedJoinServer;
+  playerIndex = 1;
+  document.getElementById("passwordPrompt").style.display = "none";
+  waitForPlayers();
 }
 
 function waitForPlayers() {
@@ -135,30 +147,9 @@ function updateTurn() {
 
   if (turn === playerIndex) {
     document.getElementById("controls").innerHTML = `
-      <button onclick="enableDeleteMode()">🗑 حذف الصور</button>
       <button onclick="enableGuessMode()">🎯 تخمين الصورة</button>
     `;
   }
-}
-
-let deleteMode = false;
-function enableDeleteMode() {
-  deleteMode = true;
-  const images = document.querySelectorAll("#imageContainer img");
-  images.forEach(img => {
-    img.onclick = () => {
-      img.style.opacity = "0.3";
-      img.classList.add("marked-for-deletion");
-    };
-  });
-  document.getElementById("controls").innerHTML += `<br><button onclick="deleteSelectedImages()">تأكيد الحذف</button>`;
-}
-
-function deleteSelectedImages() {
-  document.querySelectorAll(".marked-for-deletion").forEach(img => img.remove());
-  deleteMode = false;
-  document.getElementById("controls").innerHTML = "";
-  updateTurn();
 }
 
 function enableGuessMode() {

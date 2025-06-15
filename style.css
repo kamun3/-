@@ -16,7 +16,7 @@ body {
   box-shadow: 0 0 15px #000;
 }
 
-input {
+input, button {
   padding: 10px;
   margin: 10px;
   width: 80%;
@@ -26,26 +26,27 @@ input {
 }
 
 button {
-  padding: 10px 20px;
-  margin: 10px;
   background: #00b894;
   color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
   cursor: pointer;
-  transition: background 0.3s;
 }
 
-button:hover {
-  background: #019875;
+button:disabled {
+  background: gray;
+  cursor: not-allowed;
+}
+
+.modes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
 }
 
 #imageContainer {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 10px;
-  justify-content: center;
   margin-top: 20px;
 }
 
@@ -54,8 +55,8 @@ button:hover {
   max-width: 100px;
   height: auto;
   border-radius: 10px;
-  transition: transform 0.3s, opacity 0.3s;
   cursor: pointer;
+  transition: transform 0.3s;
 }
 
 #imageContainer img:hover {
@@ -66,40 +67,4 @@ button:hover {
   margin-top: 20px;
   border: 2px solid #00b894;
   border-radius: 10px;
-}
-
-.marked-for-deletion {
-  opacity: 0.3 !important;
-  border: 2px dashed red;
-}
-
-#gameModes {
-  margin-top: 10px;
-}
-
-#gameModes button {
-  display: inline-block;
-  margin: 5px;
-  background: #0984e3;
-}
-
-#gameModes button:hover {
-  background: #74b9ff;
-}
-
-#serverList {
-  margin-top: 15px;
-}
-
-.server-entry {
-  background: #333;
-  padding: 10px;
-  margin: 5px auto;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 80%;
-}
-
-.server-entry:hover {
-  background: #444;
 }

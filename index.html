@@ -10,48 +10,49 @@
   <div class="container">
     <h1>🎮 لعبة سيرفرات المشاهير</h1>
 
-    <!-- تسجيل اسم اللاعب -->
     <div id="nameSection">
       <input type="text" id="playerName" placeholder="ادخل اسمك" />
       <button onclick="enterGame()">دخول</button>
     </div>
 
-    <!-- القائمة الرئيسية -->
     <div id="mainMenu" style="display:none;">
       <button onclick="showCreate()">➕ إنشاء سيرفر</button>
       <button onclick="showJoin()">🔍 دخول سيرفر</button>
     </div>
 
-    <!-- إنشاء سيرفر -->
     <div id="createSection" style="display:none;">
       <h2>إنشاء سيرفر</h2>
       <input type="text" id="serverName" placeholder="اسم السيرفر" />
       <input type="password" id="serverPass" placeholder="كلمة المرور (اختياري)" />
-      <div id="gameModes">
-        <p>❒ اختر نوع اللعبة:</p>
-        <button onclick="selectMode('youtube')">🎥 مشاهير اليوتيوب</button>
-        <button onclick="underMaintenance()">⚽ كرة قدم</button>
-        <button onclick="underMaintenance()">🎤 مغنيين</button>
-        <button onclick="underMaintenance()">🕹️ ألعاب قديمة</button>
-        <button onclick="underMaintenance()">👑 ملوك وسلاطين</button>
+      <div class="mode-options">
+        <h3>اختر نوع اللعبة:</h3>
+        <div class="modes">
+          <button onclick="selectMode('مشاهير اليوتيوب')" id="mode1">🎮 مشاهير اليوتيوب</button>
+          <button disabled>⚽ كرة القدم (جاري الصيانة)</button>
+          <button disabled>🎬 أفلام ومسلسلات (جاري الصيانة)</button>
+          <button disabled>🎵 موسيقى (جاري الصيانة)</button>
+          <button disabled>🎮 ألعاب كلاسيكية (جاري الصيانة)</button>
+        </div>
       </div>
       <button onclick="createServer()">إنشاء</button>
     </div>
 
-    <!-- دخول سيرفر -->
     <div id="joinSection" style="display:none;">
       <h2>دخول سيرفر</h2>
       <input type="text" id="searchName" placeholder="ابحث عن اسم السيرفر" />
       <div id="serverList"></div>
     </div>
 
-    <!-- الانتظار -->
+    <div id="passwordPrompt" style="display:none;">
+      <input type="password" id="joinPass" placeholder="كلمة المرور" />
+      <button onclick="confirmJoin()">دخول</button>
+    </div>
+
     <div id="waitingScreen" style="display:none;">
       <h2>جاري الانتظار...</h2>
       <p>انتظر دخول لاعب آخر لبدء اللعبة.</p>
     </div>
 
-    <!-- منطقة اللعب -->
     <div id="gameArea" style="display:none;">
       <h2>📸 صور المشاهير</h2>
       <p id="turnInfo"></p>
@@ -59,8 +60,6 @@
       <div id="selectedImage"></div>
       <div id="controls"></div>
     </div>
-
-    <div id="result"></div>
   </div>
 
   <script src="script.js"></script>
